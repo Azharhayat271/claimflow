@@ -4,7 +4,7 @@ A synthetic healthcare billing and claims data platform, built on Databricks wit
 
 Data is generated with [Synthea](https://github.com/synthetichealth/synthea). No real patient data is used anywhere in this project.
 
-**Status:** Day 1 of 100. Workspace, catalog and repo set up.
+**Status:** In development. Databricks workspace, Unity Catalog and CI/CD deploys are in place.
 
 ## Layout
 
