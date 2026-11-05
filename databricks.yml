@@ -1,0 +1,30 @@
+# ClaimFlow Asset Bundle: everything deployed to Databricks is defined here or in resources/.
+# Deploy to dev from your laptop; prod is deployed only by GitHub Actions on merge to main.
+bundle:
+  name: claimflow
+
+include:
+  - resources/*.yml
+
+variables:
+  catalog:
+    description: Unity Catalog catalog holding the bronze, silver and gold schemas
+    default: claimflow
+
+targets:
+  dev:
+    # Resources get a "[dev <user>]" prefix and schedules are paused.
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-c5668f8b-13db.cloud.databricks.com
+
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-c5668f8b-13db.cloud.databricks.com
+      # One fixed location, so every CI deploy updates the same copy instead of making a new one.
+      root_path: /Workspace/Users/azharhayat271@gmail.com/.bundle/${bundle.name}/${bundle.target}
+    permissions:
+      - user_name: azharhayat271@gmail.com
+        level: CAN_MANAGE

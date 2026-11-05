@@ -1,0 +1,35 @@
+# Validate the bundle on every PR; deploy to prod and smoke-test it on every merge to main.
+name: bundle
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+# Never let two deploys run against prod at the same time.
+concurrency:
+  group: bundle-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: databricks/setup-cli@main
+      - run: databricks bundle validate -t prod
+
+  deploy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: databricks/setup-cli@main
+      - run: databricks bundle validate -t prod
+      - run: databricks bundle deploy -t prod
+      - run: databricks bundle run -t prod smoke_test
