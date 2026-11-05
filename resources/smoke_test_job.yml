@@ -1,0 +1,11 @@
+resources:
+  jobs:
+    smoke_test:
+      name: claimflow_smoke_test
+      tasks:
+        # No cluster is configured, so the task runs on serverless compute.
+        - task_key: check_schemas
+          notebook_task:
+            notebook_path: ../src/smoke_test.py
+            base_parameters:
+              catalog: ${var.catalog}
