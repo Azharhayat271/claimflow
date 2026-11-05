@@ -1,0 +1,29 @@
+# Synthea output and any local data: large, regenerable, never committed
+data/
+
+# Databricks Asset Bundle local state
+.databricks/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# dbt
+dbt/target/
+dbt/dbt_packages/
+dbt/logs/
+
+# Node (billing-api, mcp-server)
+node_modules/
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# Secrets and OS noise
+.env
+.env.*
+.DS_Store
