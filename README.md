@@ -4,7 +4,7 @@ A synthetic healthcare billing and claims data platform, built on Databricks wit
 
 Data is generated with [Synthea](https://github.com/synthetichealth/synthea). No real patient data is used anywhere in this project.
 
-**Status:** In development. Databricks workspace, Unity Catalog and CI/CD deploys are in place.
+**Status:** In development. Databricks workspace, Unity Catalog, CI/CD deploys and bronze ingestion are in place.
 
 ## Layout
 
@@ -12,6 +12,7 @@ Data is generated with [Synthea](https://github.com/synthetichealth/synthea). No
 | --- | --- |
 | `src/` | PySpark jobs: bronze ingestion, silver conforming, gold star schema, streaming, embeddings |
 | `resources/` | Databricks Asset Bundle job and pipeline definitions |
+| `scripts/` | Local helpers, such as packaging source files for upload to the landing volume |
 | `dbt/` | dbt project: staging, marts, snapshots, tests |
 | `services/` | Billing API (the CDC source system) and the MCP server |
 | `infra/` | Docker Compose for the local Kafka stack; Terraform for Azure |
