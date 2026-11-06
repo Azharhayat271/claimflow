@@ -1,0 +1,20 @@
+resources:
+  jobs:
+    bronze_ingest:
+      name: claimflow_bronze_ingest
+      # Reads /Volumes/<catalog>/bronze/landing (files uploaded with scripts/prepare_landing.py).
+      # The landing volume is provisioned once, outside the bundle, like any source bucket.
+      # The two tasks are independent, so they run in parallel on serverless compute.
+      tasks:
+        - task_key: ingest_csv
+          notebook_task:
+            notebook_path: ../src/bronze/ingest_csv.py
+            base_parameters:
+              catalog: ${var.catalog}
+              batch_id: "{{job.run_id}}"
+        - task_key: ingest_fhir
+          notebook_task:
+            notebook_path: ../src/bronze/ingest_fhir.py
+            base_parameters:
+              catalog: ${var.catalog}
+              batch_id: "{{job.run_id}}"
